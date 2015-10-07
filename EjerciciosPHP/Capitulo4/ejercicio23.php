@@ -32,7 +32,7 @@ de los números introducidos y la media.</h5> <br>
           </form>
       <?php
       }else{
-          if($suma<10000){
+          if($suma<=10000){
               $suma=$suma+$numeroIntroducido;
               $contador++;
       ?>
@@ -44,7 +44,7 @@ de los números introducidos y la media.</h5> <br>
           <input type="submit" value="Continuar">
           </form>
       <?php
-          }if($suma==10000) {
+          }if($suma>10000) {
               $media=$suma/$contador;
               echo "El media de estos números es: " . $media . "<br>";
               echo "La suma: " . $suma . "<br>";
