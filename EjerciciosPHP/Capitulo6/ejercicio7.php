@@ -22,7 +22,7 @@
       únicamente algo de texto y un formulario para cambiar el color.</p>
   </head>
   <body>
-    <div id="pagina">
+    <div id="color">
         <p>Elige el color de fondo para la página.</p>
         <form action="#" method="post">
           <input type="color" name="color" value="<?=$color?>"><br><br>
@@ -30,6 +30,6 @@
         </form>
     </div>
 
-  <script>document.getElementById("pagina").style.background="<?=$color?>";</script>
+  <script>document.getElementById("color").style.background="<?=$color?>";</script>
   </body>
 </html>  
