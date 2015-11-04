@@ -17,14 +17,32 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
         Eliminar por si el usuario se arrepiente y quiere quitar un producto 
         concreto del carrito de la compra. A continuación se muestra una captura 
         de pantalla de una posible solución.</h5> <br>
-  </head>
+  <style> 
+      #primeratabla{
+          float: left;
+          //pull-left para flotar con bootstrap
+      }
+      
+      #segundatabla{
+          border: 1px; 
+          margin-left: 800px;
+          //border: solid 2px;
+          //width: 200px;
+          //height: 400px; 
+      }
+  </style>
+ </head>
   <body>    
 <h3 style="text-align: center">Tienda on-line <b>/**Piensos para perros**\</b></h3>
+<table id="primeratabla" style="border: 1px; margin-left: 50px"><tr><td>
 
-<table style="border: 1px; margin-left: 30px">
-    <tr><td>
-<h3>Productos</h3><hr>
-<?php
+<tr>
+  <td><strong><h3>Productos</h3><hr></strong></td>
+</tr>
+ 
+<tr>
+    <td>
+    <?php
 
     $productos = array ( 
     "junior" => array( "nombre" => "Optima Cachorros", "precio" => 29, "imagen" => "optima-junior.jpg"),
@@ -43,11 +61,21 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     </form><br><br>
     <?php
      }
-    ?>
-    </td><td>			
-    <h3>Carrito</h3><hr>
-    
-      <?php
+    ?>  
+    </td>
+</tr>
+</table>
+
+
+<table id="segundatabla"><tr><td>
+
+<tr>
+  <td><strong><h3>Carrito</h3><hr></strong></td>
+</tr>
+ 
+<tr>
+    <td>
+        <?php
     /********* ESTA ES LA PARTE DEL CARRITO *********/
     
     // Inicializo por primera vez el carrito
@@ -73,7 +101,7 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     if ($_SESSION['carrito'][$codigocarrito] > 0) {
       $totalcarrito = $totalcarrito + ($_SESSION['carrito'][$codigocarrito] * $elemento[precio]);
       ?>
-    <img src="images/<?=$elemento[imagen]?>" width="150" height="200" border="1"><br>
+    <img src="images/<?=$elemento[imagen]?>" width="50" height="80" border="1"><br>
       <?=$elemento[nombre]?><br>Precio: <?=$elemento[precio]?> €<br>
       
       Unidades: <?=$_SESSION['carrito'][$codigocarrito]?>
@@ -87,9 +115,8 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
   }
   ?>
   <b>Total: <?=$totalcarrito?> €</b>
-  </td>
-  </tr>
+ </td>
+</tr> 
 </table>
-
  </body>
-</html>    
+</html>     
