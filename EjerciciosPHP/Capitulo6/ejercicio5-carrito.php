@@ -19,8 +19,10 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
         de pantalla de una posible solución.</h5> <br>
   </head>
   <body>    
-<h3 style="text-align: center">Tienda on-line <b><i><u>Piensos para perros</u></i></b></h3>
-<table style="border: 1px; margin-left: 30px"><tr><td>
+<h3 style="text-align: center">Tienda on-line <b>/**Piensos para perros**\</b></h3>
+
+<table style="border: 1px; margin-left: 30px">
+    <tr><td>
 <h3>Productos</h3><hr>
 <?php
 
@@ -32,7 +34,7 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     );       
       foreach ($productos as $codigo => $elemento) {
     ?>
-      <img src="images/<?=$elemento[imagen]?>" width="200" border="1"><br>
+<img src="images/<?=$elemento[imagen]?>" width="150" height="200" border="1"><br>
     <?=$elemento[nombre]?><br>Precio: <?=$elemento[precio]?> €
     <form action="#" method="post">
       <input type="hidden" name="codigo" value="<?=$codigo?>">
@@ -57,11 +59,11 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     }
     
     if ($accion == "comprar"){
-        $_SESSION['carrito'][$codigo++];
+        $_SESSION['carrito'][$codigo]++;
     }
     
     if ($accion == "eliminar"){
-        $_SESSION['carrito'][$codigo--];
+        $_SESSION['carrito'][$codigo]=0;
     }
 				
   // Muestra lo que tiene el carrito
@@ -71,7 +73,7 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     if ($_SESSION['carrito'][$codigocarrito] > 0) {
       $totalcarrito = $totalcarrito + ($_SESSION['carrito'][$codigocarrito] * $elemento[precio]);
       ?>
-      <img src="images/<?=$elemento[imagen]?>" width="200" border="1"><br>
+    <img src="images/<?=$elemento[imagen]?>" width="150" height="200" border="1"><br>
       <?=$elemento[nombre]?><br>Precio: <?=$elemento[precio]?> €<br>
       
       Unidades: <?=$_SESSION['carrito'][$codigocarrito]?>
