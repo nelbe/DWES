@@ -5,18 +5,6 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
 <html>
   <head>
     <meta charset="UTF-8">
-    <h5>Crea una tienda on-line sencilla con un catálogo de productos y un 
-        carrito de la compra. Un catálogo de cuatro o cinco productos será 
-        suficiente. De cada producto se debe conocer al menos la descripción y 
-        el precio. Todos los productos deben tener una imagen que los identifique. 
-        Al lado de cada producto del catálogo deberá aparecer un botón Comprar 
-        que permita añadirlo al carrito.
-        Si el usuario hace clic en el botón Comprar de un producto que ya estaba 
-        en el carrito, se deberá incrementar el número de unidades de dicho 
-        producto. Para cada producto que aparece en el carrito, habrá un botón 
-        Eliminar por si el usuario se arrepiente y quiere quitar un producto 
-        concreto del carrito de la compra. A continuación se muestra una captura 
-        de pantalla de una posible solución.</h5> <br>
   <style> 
       #primeratabla{
           float: left;
@@ -66,23 +54,45 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
     <?php
 
     $productos = array ( 
-    "junior" => array( "nombre" => "Optima Cachorros", "precio" => 29, "imagen" => "optima-junior.jpg"),
-    "adult" => array( "nombre" => "Optima Adultos", "precio" => 31.5, "imagen" => "optima.jpg"),
-    "fish" => array( "nombre" => "Optima Pescado", "precio" => 35, "imagen" => "optima-fish.jpg"),
-    "adult-mini" => array( "nombre" => "Optima Adultos mini", "precio" => 31, "imagen" => "optima_mini_adult.jpg")
-    );       
+    "junior" => array( "nombre" => "Optima Cachorros", 
+                       "precio" => 32.95, 
+                       "imagen" =>"optima-junior.jpg",
+                       "detalles" => "Cotecnica Optima Junior es un pienso para cachorros muy equilibrado indicado para animales hasta los 12 meses. Su receta es rica en proteínas y ayuda a desarrollar la musculatura del animal gracias a su gran aporte energético."),
+    "adult" => array( "nombre" => "Optima Adultos", 
+                      "precio" => 37.2, 
+                      "imagen" => "optima-energy.pg",
+                      "detalles" => "El pienso Cotecnica Optima Energy es un alimento seco en forma de croquetas indicado para la nutrición de perros deportistas, de trabajo o que realizan mucha actividad física."),
+    "fish" => array( "nombre" => "Optima Pescado", 
+                     "precio" => 34.6, 
+                     "imagen" => "optima-fish.jpg",
+                     "detalles" => "Cotecnica Optima Fish ha elaborado este pienso para perros con sabor a pescado. Se trata de un alimento seco indicado para la nutrición diaria de perros adultos de cualquier tamaño o raza. "),
+    "adult-alergia" => array( "nombre" => "Optima cordero y arroz", 
+                           "precio" => 34.6, 
+                           "imagen" => "ptima-cordero.jpg",
+                           "detalles" => "El pienso Cotecnica Optima con cordero y arroz en forma de croquetas está indicado para la alimentación diaria de perros con alergias, sensibilidad o intolerancia alimenticia.")
+    );     
+    
+    
+      $_SESSION['producto'] = $productos;
+      
       foreach ($productos as $codigo => $elemento) {
     ?>
 <img src="images/<?=$elemento[imagen]?>" width="150" height="200"><br>
-    <?=$elemento[nombre]?><br>Precio: <?=$elemento[precio]?> €
+<b><?=$elemento[nombre]?></b><br>Precio: <?=$elemento[precio]?> €
     <form action="#" method="post">
       <input type="hidden" name="codigo" value="<?=$codigo?>">
       <input type="hidden" name="accion" value="comprar">
       <input type="submit" value="Comprar">
+    </form>
+
+    <form action="detalles.php" method="post">
+      <input type="hidden" name="codigo" value="<?=$codigo?>">
+      <input type="hidden" name="detalle" value="detalle">
+      <input type="submit" value="Detalles">
     </form><br><br>
     <?php
      }
-     
+
     ?>  
     </td>
 </tr>
@@ -166,4 +176,4 @@ session_start(); // Inicio de sesión (Simpre al principio de todo)
 </table>
 </div>    
  </body>
-</html>     
+</html>   
