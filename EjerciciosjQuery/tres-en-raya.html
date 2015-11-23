@@ -49,8 +49,8 @@
     
     <script src="jquery-1.11.3.min.js"></script>
     <script>
-        
-    var jugador;    
+         
+    var jugador = 1;
         
     $(document).ready(function(){
             var capa = "<div></div>";
@@ -69,47 +69,38 @@
         $("#contenedor").find("div").eq(7).attr("id","8");
         $("#contenedor").find("div").last().attr("id","9");
         
-        
+       
       
     $("#empezar").on("click", function(){
-        var jugador = 1;
         
-        document.getElementById("turno").innerHTML = "Es el turno del jugador " + jugador;
         
-        if (jugador == 1){
-            
-            $("#contenedor").find("div").on("click", function(){
-            
-                if($(this).hasClass("circulo")) {
-                   alert("Esta casilla ya está ocupada");
-                }else{
-                    var juegoUno = $(this).attr("id");
-                    $("#" + juegoUno).addClass("circulo"); 
-                    jugador = 2;
-                }
-            })
-
-        }
-        
-        if (jugador==2){
-            
             document.getElementById("turno").innerHTML = "Es el turno del jugador " + jugador;
             
             $("#contenedor").find("div").on("click", function(){
-            
-                if($(this).hasClass("raya")) {
-                   alert("Esta casilla ya está ocupada");
+                
+                
+                if (jugador==1){
+                    if($(this).hasClass("circulo")) {
+                        alert("Esta casilla ya está ocupada");
+                    }
+                    
+                    var juegoUno = $(this).attr("id");
+                    $("#" + juegoUno).addClass("circulo");
+                    jugador = 2;
+                    console.log(jugador);  
                 }else{
+                    if($(this).hasClass("raya")) {
+                        alert("Esta casilla ya está ocupada");
+                    }
+                    
                     var juegoDos = $(this).attr("id");
                     $("#" + juegoDos).addClass("raya");
                     jugador = 1;
                 }
-
-            });
-            
-        }
+            }); 
         
     }); //Cierra el boton empezar
+           
         
         
         
@@ -128,3 +119,4 @@
 </div>     
 </body>
 </html>
+
