@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+    
+    <style>
+    #cuadro{
+        width: 300px;
+        height: 300px;
+        background-color: #D8D8D8;
+    }    
+        
+     #contenedor{
+        border: solid 1px black;
+        width: 156px;
+        height: 156px;
+        margin-top: 5%;
+        margin-left: 80px;
+        margin-bottom: 5%; 
+    }
+        
+     #contenedor div{
+        float: left;
+        width: 50px;
+        height: 50px;
+        border: solid 1px black;
+        }      
+        
+     .raya{
+        background-image: url("img/cruz.png");
+        background-repeat:no-repeat;
+        width: 20px;
+        height: 20px;
+     } 
+        
+    .circulo{
+        background-image: url("img/circulo.png");
+        background-repeat:no-repeat;
+        width: 50px;
+        height: 50px;    
+    }    
+        
+    p{
+        padding-top: 10px;
+        margin-left: 50px;
+    }
+    </style>
+    
+    <script src="jquery-1.11.3.min.js"></script>
+    <script>
+        
+    var jugador;    
+        
+    $(document).ready(function(){
+            var capa = "<div></div>";
+            for (i=0;i<9;i++){
+                $("#contenedor").append(capa); //para añadir las capas
+            }
+        
+        //Añado los id
+        $("#contenedor").find("div").first().attr("id","1");
+        $("#contenedor").find("div").eq(1).attr("id","2");
+        $("#contenedor").find("div").eq(2).attr("id","3");
+        $("#contenedor").find("div").eq(3).attr("id","4");
+        $("#contenedor").find("div").eq(4).attr("id","5");
+        $("#contenedor").find("div").eq(5).attr("id","6");
+        $("#contenedor").find("div").eq(6).attr("id","7");
+        $("#contenedor").find("div").eq(7).attr("id","8");
+        $("#contenedor").find("div").last().attr("id","9");
+        
+        
+      
+    $("#empezar").on("click", function(){
+        var jugador = 1;
+        
+        document.getElementById("turno").innerHTML = "Es el turno del jugador " + jugador;
+        
+        if (jugador == 1){
+            
+            $("#contenedor").find("div").on("click", function(){
+            
+                if($(this).hasClass("circulo")) {
+                   alert("Esta casilla ya está ocupada");
+                }else{
+                    var juegoUno = $(this).attr("id");
+                    $("#" + juegoUno).addClass("circulo"); 
+                    jugador = 2;
+                }
+            })
+
+        }
+        
+        if (jugador==2){
+            
+            document.getElementById("turno").innerHTML = "Es el turno del jugador " + jugador;
+            
+            $("#contenedor").find("div").on("click", function(){
+            
+                if($(this).hasClass("raya")) {
+                   alert("Esta casilla ya está ocupada");
+                }else{
+                    var juegoDos = $(this).attr("id");
+                    $("#" + juegoDos).addClass("raya");
+                    jugador = 1;
+                }
+
+            });
+            
+        }
+        
+    }); //Cierra el boton empezar
+        
+        
+        
+    }); //Cierra el script principal
+    </script>
+    
+    
+</head>
+    
+<body>
+<div id="cuadro">   
+    <p id="turno">Es el turno del Jugador 1</p>
+    
+    <div id="contenedor"></div>
+    <button id="empezar">Empezar</button>
+</div>     
+</body>
+</html>
