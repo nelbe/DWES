@@ -15,9 +15,9 @@
         border: solid 1px black;
         width: 156px;
         height: 156px;
-        margin-top: 5%;
-        margin-left: 80px;
-        margin-bottom: 5%; 
+        margin-top: 20px; 
+        margin-left: 65px;
+        margin-bottom: 10%; 
     }
         
      #contenedor div{
@@ -27,7 +27,7 @@
         border: solid 1px black;
         }      
         
-     .raya{
+     .cruz{
         background-image: url("img/cruz.png");
         background-repeat:no-repeat;
         width: 20px;
@@ -39,12 +39,27 @@
         background-repeat:no-repeat;
         width: 50px;
         height: 50px;    
+    }   
+    
+    #empezar{
+        margin-left: 15px;
+        position: absolute;
+    }   
+        
+    #reiniciar{
+        margin-left: 100px;
     }    
         
     p{
-        padding-top: 10px;
-        margin-left: 50px;
+        margin-top: 10px;
+        padding-top: 20px;
+        text-align: center;
     }
+        
+    h1{
+        padding-top: 100;
+        margin-left: 80px;
+    }    
     </style>
     
     <script src="jquery-1.11.3.min.js"></script>
@@ -55,7 +70,7 @@
     $(document).ready(function(){
             var capa = "<div></div>";
             for (i=0;i<9;i++){
-                $("#contenedor").append(capa); //para añadir las capas
+                $("#contenedor").append(capa); //Añado las capas
             }
         
         //Añado los id
@@ -72,36 +87,195 @@
        
       
     $("#empezar").on("click", function(){
-        
-        
-            document.getElementById("turno").innerHTML = "Es el turno del jugador " + jugador;
             
-            $("#contenedor").find("div").on("click", function(){
+        $("#contenedor").find("div").on("click", function(){
+                        
+        if (jugador==1){
+
+            document.getElementById("turno").innerHTML = "Es el turno del " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + "</font>" + "</b>";
+
+            if($(this).hasClass("circulo") || $(this).hasClass("cruz")) {
+                alert("Esta casilla ya está ocupada");
+            }else{
+                var juegoUno = $(this).attr("id");
+                $("#" + juegoUno).addClass("circulo");
+                jugador = 2;
+                console.log(jugador); 
+            }
+
+             
+        }else{
+
+            document.getElementById("turno").innerHTML = "Es el turno del " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + "</font>" + "</b>";
+
+            if($(this).hasClass("cruz") || $(this).hasClass("circulo")) {
+                alert("Esta casilla ya está ocupada");
+            }else{
+                var juegoDos = $(this).attr("id");
+                $("#" + juegoDos).addClass("cruz");
+                jugador = 1;
+            }
+        }
                 
+// ANALIZO GANADOR 
+/*** No es la forma más EFICIENTE, pero funciona bien ***/
                 
-                if (jugador==1){
-                    if($(this).hasClass("circulo")) {
-                        alert("Esta casilla ya está ocupada");
-                    }
-                    
-                    var juegoUno = $(this).attr("id");
-                    $("#" + juegoUno).addClass("circulo");
-                    jugador = 2;
-                    console.log(jugador);  
-                }else{
-                    if($(this).hasClass("raya")) {
-                        alert("Esta casilla ya está ocupada");
-                    }
-                    
-                    var juegoDos = $(this).attr("id");
-                    $("#" + juegoDos).addClass("raya");
-                    jugador = 1;
-                }
-            }); 
+/*PRIMERO COMPRUEBO TODOS LOS CASOS EN LOS QUE PUEDE GANAR CRUZ*/  
+            
+        //Compruebo las posibilidades horizontales    
+        if ($("#contenedor").find("div").first().hasClass("cruz") && $("#contenedor").find("div").eq(1).hasClass("cruz") && $("#contenedor").find("div").eq(2).hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }
+                
+        if ($("#contenedor").find("div").eq(3).hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").eq(5).hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }
+            
+        if ($("#contenedor").find("div").eq(6).hasClass("cruz") && $("#contenedor").find("div").eq(7).hasClass("cruz") && $("#contenedor").find("div").last().hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }    
+            
+        //Compruebo las posibilidades verticales       
+          
+        if ($("#contenedor").find("div").first().hasClass("cruz") && $("#contenedor").find("div").eq(3).hasClass("cruz") && $("#contenedor").find("div").eq(6).hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }    
+        
+        if ($("#contenedor").find("div").eq(1).hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").eq(7).hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }     
+            
+        if ($("#contenedor").find("div").eq(2).hasClass("cruz") && $("#contenedor").find("div").eq(5).hasClass("cruz") && $("#contenedor").find("div").last().hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        } 
+         
+        //Compruebo las posibilidades verticales
+        
+        if ($("#contenedor").find("div").first().hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").last().hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }
+            
+        if ($("#contenedor").find("div").eq(2).hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").eq(6).hasClass("cruz")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
+            
+        }    
+            
+/*AHORA COMPRUEBO TODOS LOS CASOS EN LOS QUE PUEDE GANAR CIRCULO*/
+     
+        //Compruebo las posibilidades horizontales    
+        if ($("#contenedor").find("div").first().hasClass("circulo") && $("#contenedor").find("div").eq(1).hasClass("circulo") && $("#contenedor").find("div").eq(2).hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }
+                
+        if ($("#contenedor").find("div").eq(3).hasClass("circulo") && $("#contenedor").find("div").eq(4).hasClass("circulo") && $("#contenedor").find("div").eq(5).hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }
+            
+        if ($("#contenedor").find("div").eq(6).hasClass("circulo") && $("#contenedor").find("div").eq(7).hasClass("circulo") && $("#contenedor").find("div").last().hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }    
+            
+        //Compruebo las posibilidades verticales       
+          
+        if ($("#contenedor").find("div").first().hasClass("circulo") && $("#contenedor").find("div").eq(3).hasClass("circulo") && $("#contenedor").find("div").eq(6).hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }    
+        
+        if ($("#contenedor").find("div").eq(1).hasClass("circulo") && $("#contenedor").find("div").eq(4).hasClass("circulo") && $("#contenedor").find("div").eq(7).hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }     
+            
+        if ($("#contenedor").find("div").eq(2).hasClass("circulo") && $("#contenedor").find("div").eq(5).hasClass("circulo") && $("#contenedor").find("div").last().hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        } 
+         
+        //Compruebo las posibilidades verticales
+        
+        if ($("#contenedor").find("div").first().hasClass("circulo") && $("#contenedor").find("div").eq(4).hasClass("circulo") && $("#contenedor").find("div").last().hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }
+            
+        if ($("#contenedor").find("div").eq(2).hasClass("circulo") && $("#contenedor").find("div").eq(4).hasClass("circulo") && $("#contenedor").find("div").eq(6).hasClass("circulo")){
+        
+            $("#contenedor").remove();
+            
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
+            
+        }    
+            
+//COMPRUEBO EL EMPATE
+        if ($("#contenedor div").each.hasClass("circulo") || $("#contenedor div").each.hasClass("cruz")){
+            document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "EMPATE" + "</font>";
+        }
+            
+            
+      });//Cierra el click del contenedor 
+        
         
     }); //Cierra el boton empezar
-           
-        
+    
+    $("#reiniciar").on("click", function(){
+        location.reload();
+    }); // Cierra botón de reiniciar
         
         
     }); //Cierra el script principal
@@ -112,10 +286,13 @@
     
 <body>
 <div id="cuadro">   
-    <p id="turno">Es el turno del Jugador 1</p>
+    <p id="turno"><font color=#FF0080><b>EMPIEZA EL JUEGO</b></font> <br> Es el turno del <i><b>Jugador 1</b></i></p>
+    <h1 id="gana"></h1>
     
     <div id="contenedor"></div>
     <button id="empezar">Empezar</button>
+    <button id="reiniciar">Reiniciar partida</button>
+
 </div>     
 </body>
 </html>
