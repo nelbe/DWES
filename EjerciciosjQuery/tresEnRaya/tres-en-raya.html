@@ -16,8 +16,8 @@
         width: 156px;
         height: 156px;
         margin-top: 20px; 
-        margin-left: 65px;
-        margin-bottom: 10%; 
+        margin-left: 70px;
+        margin-bottom: 20px; 
     }
         
      #contenedor div{
@@ -41,13 +41,28 @@
         height: 50px;    
     }   
     
+        
+    #cruzP{
+        background-image: url("img/cruz.png");
+        background-repeat:no-repeat;
+        width: 15px;
+        height: 15px;
+     } 
+        
+    #circuloP{
+        background-image: url("img/circulo.png");
+        background-repeat:no-repeat;
+        width: 15px;
+        height: 15px;    
+    }    
+        
     #empezar{
-        margin-left: 15px;
+        margin-left: 35px;
         position: absolute;
     }   
         
     #reiniciar{
-        margin-left: 100px;
+        margin-left: 120px;
     }    
         
     p{
@@ -66,6 +81,7 @@
     <script>
          
     var jugador = 1;
+    var movimiento = 0;     
         
     $(document).ready(function(){
             var capa = "<div></div>";
@@ -85,14 +101,22 @@
         $("#contenedor").find("div").last().attr("id","9");
         
        
-      
-    $("#empezar").on("click", function(){
+         /*for (i=1; i<9: i++ ){
+            $("#contenedor").find("div").eq(i).attr("id",(i+1));
             
-        $("#contenedor").find("div").on("click", function(){
+             }*/
+        
+    $('#empezar').attr("disabled", false);
+        
+    $("#empezar").on("click", function(){
+        
+        $('#empezar').attr("disabled", true); 
+        
+        $("#contenedor").find("div").on("click", function(){   
                         
         if (jugador==1){
 
-            document.getElementById("turno").innerHTML = "Es el turno del " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + "</font>" + "</b>";
+            document.getElementById("turno").innerHTML = "Ha puesto ficha el " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + " " + "</font>" + "<img id='cruzP' src='img/circulo.png'>" + "</b>";
 
             if($(this).hasClass("circulo") || $(this).hasClass("cruz")) {
                 alert("Esta casilla ya está ocupada");
@@ -100,13 +124,13 @@
                 var juegoUno = $(this).attr("id");
                 $("#" + juegoUno).addClass("circulo");
                 jugador = 2;
-                console.log(jugador); 
+                movimiento ++; 
             }
 
              
         }else{
 
-            document.getElementById("turno").innerHTML = "Es el turno del " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + "</font>" + "</b>";
+            document.getElementById("turno").innerHTML = "Ha puesto ficha el " + "<b>" + "Jugador " + "<font color=#FF0080>" + jugador + " " + "</font>" + "<img id='circuloP' src='img/cruz.png'>" + "</b>";
 
             if($(this).hasClass("cruz") || $(this).hasClass("circulo")) {
                 alert("Esta casilla ya está ocupada");
@@ -114,17 +138,22 @@
                 var juegoDos = $(this).attr("id");
                 $("#" + juegoDos).addClass("cruz");
                 jugador = 1;
+                movimiento++;
             }
         }
-                
+          
+            
 // ANALIZO GANADOR 
 /*** No es la forma más EFICIENTE, pero funciona bien ***/
-                
+                          
+          
 /*PRIMERO COMPRUEBO TODOS LOS CASOS EN LOS QUE PUEDE GANAR CRUZ*/  
             
         //Compruebo las posibilidades horizontales    
         if ($("#contenedor").find("div").first().hasClass("cruz") && $("#contenedor").find("div").eq(1).hasClass("cruz") && $("#contenedor").find("div").eq(2).hasClass("cruz")){
         
+            $('#empezar').attr("disabled", true); 
+            
             $("#contenedor").remove();
             
             document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
@@ -132,7 +161,9 @@
         }
                 
         if ($("#contenedor").find("div").eq(3).hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").eq(5).hasClass("cruz")){
-        
+            
+            $('#empezar').attr("disabled", true); 
+            
             $("#contenedor").remove();
             
             document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
@@ -141,6 +172,8 @@
             
         if ($("#contenedor").find("div").eq(6).hasClass("cruz") && $("#contenedor").find("div").eq(7).hasClass("cruz") && $("#contenedor").find("div").last().hasClass("cruz")){
         
+            $('#empezar').attr("disabled", true); 
+            
             $("#contenedor").remove();
             
             document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
@@ -154,8 +187,8 @@
             $("#contenedor").remove();
             
             document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "2" + "</font>";
-            
-        }    
+        
+        }
         
         if ($("#contenedor").find("div").eq(1).hasClass("cruz") && $("#contenedor").find("div").eq(4).hasClass("cruz") && $("#contenedor").find("div").eq(7).hasClass("cruz")){
         
@@ -261,10 +294,13 @@
             document.getElementById("turno").innerHTML = "Gana el Jugador " + "<font color=red>" + "1" + "</font>";
             
         }    
-            
+
+/*if (movimiento == 9 && $("#contenedor").find("div").hasClass("circulo") ||$("#contenedor").find("div").hasClass("raya")){
+            document.getElementById("gana").innerHTML = "<font color=red>" + "EMPATE" + "</font>";
+        } */
 //COMPRUEBO EL EMPATE
         
-            
+           
             
       });//Cierra el click del contenedor 
         
