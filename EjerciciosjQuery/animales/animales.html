@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+	<style>
+    
+        #contenedor{
+            border: solid 1px black;
+            width: 600px;
+            height: 450px;
+            margin-top: 50px; 
+            margin-left: 70px;
+            margin-bottom: 20px;  
+        }
+        
+        #contenedor div{
+            width: 60px;
+            height: 80px;
+            position: absolute;
+        }
+        
+        #gameOver{
+            text-align: center;
+            padding-top: 20%;
+            font-size: 50px;
+        }
+        
+        .Dog{
+            background-image: url(img/animales/dog.png);
+            background-repeat:no-repeat;
+        }
+        
+        .Cat{
+            background-image: url(img/cat.png);
+            background-repeat:no-repeat;
+        }
+        
+        .Bear{
+            background-image: url(img/bear.png);
+            background-repeat:no-repeat;
+        }
+        
+        .Rabbit{
+            background-image: url(img/rabbit.png);
+            background-repeat:no-repeat;
+        }
+        
+        .Bird{
+            background-image: url(img/bird.png);
+            background-repeat:no-repeat;
+            
+        }
+        
+        .fail{
+            background-image: url(img/fail.jpg);
+            background-repeat:no-repeat;
+        }
+        
+        .vidas{
+            background-image: url(img/heart-small.png);
+            background-repeat:no-repeat;
+            float: left;
+            width: 30px;
+            height: 40px;
+        }
+
+        p{
+            margin-left: 20px;
+        }
+    </style>
+    <script src="jquery-1.11.3.min.js"></script>
+    <script>
+        
+        
+    $(document).ready(function(){
+    //Creo variables globales
+     var clases = ['Dog','Cat','Bear','Rabbit','Bird'];
+     var nivel;
+     var vidas = 3;
+     var idanimal; 
+        
+///FUNCIÓN EMPEZAR///        
+
+        
+        //$('#empezar').attr('disabled','true');    
+        //Función para el boton comenzar
+        $('#empezar').on('click',function(){
+        //$('#empezar').attr('disabled','true');
+
+            //Inicializo los valores
+            vidas = 3;
+            nivel = 1;
+            idanimal = 0;
+            $('#vidas').text('Vidas: ' + vidas);
+            $('#nivel').text('Nivel: ' + nivel);
+            
+            crearAnimales();
+
+        
+///FUNCIÓN CREAR ANIMALES Y VARIABLE P///
+function crearAnimales(){
+        $("#contenedor").find("div").remove();
+            //Aquí muestro los animales
+            for (i=0;i<10;i++){
+                idanimal ++;
+                var posicionLeft = Math.floor((Math.random()* 530) + 80);
+                var posicionTop = Math.floor((Math.random()* 372) + 186);
+                var aleatorio = Math.floor((Math.random() * 5)); //Hago el random para 5 elementos
+                var animales = clases[aleatorio] // Se lo aplico a los animales
+                
+                var capa = $("<div></div>")
+                .css({left:posicionLeft + 'px', top:posicionTop + 'px'})
+                .addClass(animales)
+                .attr('id','animal' + idanimal);
+                $("#contenedor").append(capa); //Añado las capas
+            }//Cierra FOR clases ANIMALES
+            
+            
+            //Aquí añado una clase aleatoria al p        
+            animal = Math.floor((Math.random()*5));
+            $('#animal').addClass(clases[animal]);
+            $('#animal').text('Animal: ' + clases[animal]);
+
+        juego();    
+}//Cierro funcion crear animales    
+        
+
+///FUNCIÓN JUEGO///        
+ function juego(){
+    $("#contenedor").find("div").on("click", function(){   
+            
+            if($(this).hasClass(clases[animal]) === $("#animal").hasClass(clases[animal])) {
+                nivel++
+                crearAnimales();
+                document.getElementById("nivel").innerHTML = "Nivel " + nivel;
+  
+            }else{
+                $(this).removeClass();
+                $(this).addClass("fail");
+                vidas--;
+                $("#vidas").text("Vidas: " + vidas);
+            }
+        
+        if(vidas == 0){
+            $("#contenedor").find("div").remove();
+            document.getElementById("gameOver").innerHTML = "<font color=#FF0080>" + "GAME OVER" + "</font>";
+        }
+    
+    });
+
+     
+ } //Cierro función juego
+
+
+}); // Cierro botón empezar            
+           
+            
+            
+            
+        
+
+
+        
+        
+        $("#reiniciar").on("click", function(){
+        location.reload();
+        }); // Cierra botón de reiniciar
+   
+    }); //Cierra script principal
+
+
+
+
+    </script>                      
+</head>
+    
+<body>
+    <button id="empezar">Empezar</button>
+    <button id="reiniciar">Reiniciar</button>
+    <p id="animal">Animal: -</p>
+    <p id="nivel">Nivel: 0</p>
+    <p id="vidas">Vidas: 3</p>
+    <div id="contenedor">
+        <h1 id="gameOver"></h1>
+    </div>
+</body>
+</html>
