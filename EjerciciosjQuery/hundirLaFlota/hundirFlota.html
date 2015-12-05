@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+</head>
+
+<style>
+    #contenedor{
+        border: solid 1px black;
+        width: 210px;
+        height: 208px;
+        margin-bottom: 5%; 
+        margin-left:11%;
+        position: absolute;
+    }
+        
+     #contenedor div{
+        float: left;
+        width: 40px;
+        height: 40px;
+        border: solid 1px black;
+        } 
+    
+    #parteArriba{
+        width: 249px;
+        height: 40px;
+        margin-left: 104px;
+        border-top: solid 1px black;
+        border-right: solid 1px black;
+        border-left: solid 1px black;
+    }
+    
+    #parteArriba div{
+        width: 41px;
+        height: 40px;
+        float: left;
+        text-align: center;
+    }
+    
+    #parteIzq{
+        width: 40px;
+        height: 210px;
+        margin-left: 104px;
+        position: absolute;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+    }
+    
+     #parteIzq div{
+        width: 40px;
+        height: 42px;
+        text-align: center;
+    }
+    
+    .colorLaterales{
+        background-color: gray;
+    }
+    
+    .barcoB{
+        background-image: url(img/barcoB.jpg);
+        background-repeat:no-repeat;
+       
+    }
+    
+    .barco{
+        background-image: url(img/barcoR.jpg);
+        background-repeat:no-repeat;
+       
+    }
+    
+     .aguaB{
+        background-image: url(img/aguaB.jpg);
+        background-repeat:no-repeat;
+    }
+    
+    .agua{
+        background-image: url(img/marR.jpg);
+        background-repeat:no-repeat;
+    }
+    
+    h1{
+        margin-left: 60px;
+        margin-top: 10px;
+    }
+    
+    p{
+        margin-left: 180px;
+    }
+    
+    #reiniciar{
+        margin-top: 229px;
+        margin-left: 180px;
+        background-color: rgb(110, 110, 109);
+        color: black;
+        width: 94px;
+        height: 32px;
+    }
+
+    
+</style>    
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+$(document).ready(function(){
+
+var cuentaClick=0;
+    
+    //div invisibles parte de arriba
+    var capa = "<div></div>";
+        for (i=0;i<6;i++){
+            $("#parteArriba").append(capa); //para añadir las capas
+        }
+    //div invisibles parte de izquierda
+    var capa = "<div></div>";
+        for (i=0;i<5;i++){
+            $("#parteIzq").append(capa); //para añadir las capas
+        }
+    
+    //Pinto los números
+    for (i=1;i<=5;i++){
+    $("#parteArriba").find("div").eq(i).text(i);
+    }
+    
+    //Pinto las letras
+    $("#parteIzq").find("div").first().text("A");
+    $("#parteIzq").find("div").eq(1).text("B");
+    $("#parteIzq").find("div").eq(2).text("C");
+    $("#parteIzq").find("div").eq(3).text("D");
+    $("#parteIzq").find("div").eq(4).text("E");
+    $("#parteIzq").find("div").eq(4).text("F");
+    
+    $("#parteArriba").find("div").addClass("colorLaterales");
+    $("#parteIzq").find("div").addClass("colorLaterales");
+    
+    //Crear DIV en contenedor
+    //var posicionRandom = Math.floor((Math.random()* ) + );
+    
+  
+    
+    for (i=0;i<25;i++){
+        var capa = $("<div></div>")
+            .addClass("aguaB");
+            //$(".agua").hide();
+            $("#contenedor").append(capa);  
+    }
+    
+    while ($(".barcoB").length < 5){
+          var posicion  = Math.floor((Math.random()* 25) + 1);
+      
+        if(!($("#contenedor div").eq(posicion).hasClass("barcoB"))){
+            $("#contenedor").find("div").eq(posicion).removeClass("aguaB");
+            $("#contenedor").find("div").eq(posicion).addClass("barcoB");
+        }
+    }
+    
+   
+       $("#contenedor").find("div").on("click", function(){ 
+         if ($(".barco").length < 5){
+            
+           if($(this).hasClass("barcoB")){
+              $(this).removeClass();
+              $(this).addClass("barco");
+              cuentaClick ++;  
+            }
+        
+           if($(this).hasClass("aguaB")){
+              $(this).removeClass();
+              $(this).addClass("agua");
+              cuentaClick ++;
+            }
+         }
+         
+         if ($(".barco").length == 5){
+            $('#game').text('JUEGO TERMINADO'); 
+            document.getElementById("intentos").innerHTML = "En " + "<font color=red>" + cuentaClick + "</font>" + " intentos";
+            
+            
+         }
+           
+            
+        })
+       
+       $("#reiniciar").on("click", function(){
+        location.reload();
+        }); // Cierra botón de reiniciar
+
+    
+}); //Cierra script principal
+</script>      
+    
+<body>  
+    <div id="parteArriba"></div>
+    <div id="parteIzq"></div>
+    <div id="contenedor"></div>
+    <button id="reiniciar">Reiniciar</button>
+    <h1 id="game"></h1>
+    <p id="intentos"></p>
+    
+</body>
+</html>
